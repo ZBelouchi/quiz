@@ -9,26 +9,9 @@ export default function Answers(props) {
         // correct answer
         // 3 incorrect answers
         // question
-    // const question = // API call > object by id
-    const question = {
-        "category": "Science",
-        "id": "622a1c3c7cc59eab6f951924",
-        "correctAnswer": "A Reindeer",
-        "incorrectAnswers": [
-            "A Whale",
-            "A Mouse",
-            "A Spider"
-        ],
-        "question": "What type of animal is a caribou?",
-        "tags": [
-            "animals",
-            "names",
-            "science"
-        ],
-        "type": "Multiple Choice",
-        "difficulty": "easy",
-        "regions": []
-    }
+    //example pull, static index from session storage 
+    const question = JSON.parse(window.sessionStorage.getItem('questions'))[1]
+    
     const [answers, setAnswers] = useState([question.correctAnswer, ...question.incorrectAnswers].sort(function(a, b){return 0.5 - Math.random()}))
     const correct = answers.indexOf(question.correctAnswer)
 
