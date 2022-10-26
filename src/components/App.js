@@ -7,8 +7,8 @@ export default function App() {
     return (
         <React.StrictMode>
             <div className="game-box">
-                {/* <Options /> */}
-                <Question />
+                <Options />
+                {/* <Question /> */}
             </div>
         </React.StrictMode>
     )
