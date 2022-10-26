@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function Answers(props) {
+export default function Answers() {
     const [status, setStatus] = useState([0, 0, 0, 0])
     const [hasAnswered, setHasAnswered] = useState(false)
     
@@ -10,6 +10,8 @@ export default function Answers(props) {
         // 3 incorrect answers
         // question
     //example pull, static index from session storage 
+    const questionCount = window.sessionStorage.getItem('questionCount')
+    const currentQuestion = window.sessionStorage.getItem('currentQuestion')
     const question = JSON.parse(window.sessionStorage.getItem('questions'))[1]
     
     const [answers, setAnswers] = useState([question.correctAnswer, ...question.incorrectAnswers].sort(function(a, b){return 0.5 - Math.random()}))
@@ -32,6 +34,8 @@ export default function Answers(props) {
 
     return (
         <section className='question'>
+            {/* question number */}
+            <p>Question {currentQuestion} of {questionCount}</p>
             {/* question */}
             <h2 className="question__prompt">{question.question}</h2>
 

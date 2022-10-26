@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Options() {
     const [response, setResponse] = useState(false)
     const [count, setCount] = useState(10)
+    const nav = useNavigate()
     const categories = [
         ["arts_and_literature",     ""],
         ["film_and_tv",             ""],
@@ -27,7 +29,6 @@ export default function Options() {
             category: e.target.category.value,
             difficulty: e.target.difficulty.value,
             count: e.target.count.value
-            
         })  
     }
     // Begin Function
@@ -41,6 +42,9 @@ export default function Options() {
             // store json in session storage
             console.log(json)
             window.sessionStorage.setItem('questions', JSON.stringify(json))
+            window.sessionStorage.setItem('currentQuestion', 0)
+            window.sessionStorage.setItem('questionCount', response.count)
+            nav('/question')
         })
     }
     }, [response])
@@ -76,7 +80,7 @@ function RadioButton(props) {
                 type="radio" 
                 name={name} 
                 className="radio-btn__radio"
-                id={`opt-category-${index}`} 
+                id={`opt-${name}-${index}`} 
                 value={category}
                 style={{
                     background: background
