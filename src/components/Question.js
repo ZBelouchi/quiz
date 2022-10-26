@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Answers() {
     const [status, setStatus] = useState([0, 0, 0, 0])
     const [hasAnswered, setHasAnswered] = useState(false)
+    const nav = useNavigate()
     
     // API responds with
         // id
@@ -10,9 +12,9 @@ export default function Answers() {
         // 3 incorrect answers
         // question
     //example pull, static index from session storage 
-    const questionCount = window.sessionStorage.getItem('questionCount')
-    const currentQuestion = window.sessionStorage.getItem('currentQuestion')
-    const question = JSON.parse(window.sessionStorage.getItem('questions'))[1]
+    const questionCount = Number(window.sessionStorage.getItem('questionCount'))
+    const currentQuestion = Number(window.sessionStorage.getItem('currentQuestion'))
+    const question = JSON.parse(window.sessionStorage.getItem('questions'))[currentQuestion]
     
     const [answers, setAnswers] = useState([question.correctAnswer, ...question.incorrectAnswers].sort(function(a, b){return 0.5 - Math.random()}))
     const correct = answers.indexOf(question.correctAnswer)
@@ -35,7 +37,7 @@ export default function Answers() {
     return (
         <section className='question'>
             {/* question number */}
-            <p>Question {currentQuestion} of {questionCount}</p>
+            <p>Question {currentQuestion + 1} of {questionCount}</p>
             {/* question */}
             <h2 className="question__prompt">{question.question}</h2>
 
@@ -76,7 +78,19 @@ export default function Answers() {
                 {/* reset button */}
                 <button>Reset</button>
                 {/* next question button */}
-                <button>Next Question</button>
+                <button onClick={() => {
+                    // check if current question = total questions
+                    if (currentQuestion + 1 === questionCount) {
+                        // go to results page
+                        nav('/results')
+                    } else {
+                        // increase current by one
+                        window.sessionStorage.setItem('currentQuestion', (Number(currentQuestion) + 1))
+                        // reload
+                        window.location.reload(false)
+                    }
+                    
+                }}>Next Question</button>
             </div>
         </section>
     )

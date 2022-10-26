@@ -12,6 +12,7 @@ export default function App() {
                     <Routes>
                         <Route path='/' element={<Options />}/>
                         <Route path='/question' element={<Question />}/>
+                        <Route path='/results' element={<p>THE END</p>}/>
                         <Route path='*' element={<p>404 page not found</p>}/>
                     </Routes>
                 </Router>
