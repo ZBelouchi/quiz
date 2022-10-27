@@ -11,10 +11,8 @@ export default function Answers() {
         // correct answer
         // 3 incorrect answers
         // question
-    //example pull, static index from session storage 
-    const questionCount = Number(window.sessionStorage.getItem('questionCount'))
-    const currentQuestion = Number(window.sessionStorage.getItem('currentQuestion'))
-    const question = JSON.parse(window.sessionStorage.getItem('questions'))[currentQuestion]
+    const gameData = JSON.parse(window.sessionStorage.getItem('gameData'))
+    const question = JSON.parse(window.sessionStorage.getItem('questions'))[gameData.currentQuestion]
     
     const [answers, setAnswers] = useState([question.correctAnswer, ...question.incorrectAnswers].sort(function(a, b){return 0.5 - Math.random()}))
     const correct = answers.indexOf(question.correctAnswer)
@@ -36,8 +34,10 @@ export default function Answers() {
 
     return (
         <section className='question'>
+            {/* score */}
+            <p>Score: {gameData.currentScore} ; {(gameData.currentScore / gameData.questionTotal)* 100}%</p>
             {/* question number */}
-            <p>Question {currentQuestion + 1} of {questionCount}</p>
+            <p>Question {gameData.currentQuestion + 1} of {gameData.questionTotal}</p>
             {/* question */}
             <h2 className="question__prompt">{question.question}</h2>
 
@@ -59,12 +59,7 @@ export default function Answers() {
                             
                             if (index === correct) {
                                 // correct answer code
-                                console.log("correct")
-                                //...
-                            } else {
-                                // incorrect answer code
-                                console.log("incorrect")
-                                //...
+                                window.sessionStorage.setItem('gameData', JSON.stringify({...gameData, currentScore: gameData.currentScore + 1}))
                             }
                             setHasAnswered(true)
                             return newStatus
@@ -76,16 +71,19 @@ export default function Answers() {
 
             <div className="row">
                 {/* reset button */}
-                <button>Reset</button>
+                <button onClick={() => {
+                }}>Reset</button>
+                
+                
                 {/* next question button */}
                 <button onClick={() => {
                     // check if current question = total questions
-                    if (currentQuestion + 1 === questionCount) {
+                    if (gameData.currentQuestion + 1 === gameData.questionTotal) {
                         // go to results page
                         nav('/results')
                     } else {
                         // increase current by one
-                        window.sessionStorage.setItem('currentQuestion', (Number(currentQuestion) + 1))
+                        window.sessionStorage.setItem('gameData', JSON.stringify({...gameData, currentQuestion: gameData.currentQuestion + 1}))
                         // reload
                         window.location.reload(false)
                     }

@@ -42,8 +42,11 @@ export default function Options() {
             // store json in session storage
             console.log(json)
             window.sessionStorage.setItem('questions', JSON.stringify(json))
-            window.sessionStorage.setItem('currentQuestion', 0)
-            window.sessionStorage.setItem('questionCount', response.count)
+            window.sessionStorage.setItem('gameData', JSON.stringify({
+                currentQuestion: 0,
+                questionTotal: Number(response.count),
+                currentScore: 0
+            }))
             nav('/question')
         })
     }
