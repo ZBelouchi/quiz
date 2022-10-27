@@ -45,7 +45,8 @@ export default function Options() {
             window.sessionStorage.setItem('gameData', JSON.stringify({
                 currentQuestion: 0,
                 questionTotal: Number(response.count),
-                currentScore: 0
+                currentScore: 0,
+                hasAnswered: false
             }))
             nav('/question')
         })

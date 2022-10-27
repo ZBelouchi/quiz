@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import Modal from './Modal'
+
 export default function Answers() {
     const [status, setStatus] = useState([0, 0, 0, 0])
     const [hasAnswered, setHasAnswered] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const nav = useNavigate()
     
     // API responds with
@@ -71,9 +74,15 @@ export default function Answers() {
 
             <div className="row">
                 {/* reset button */}
-                <button onClick={() => {
-                }}>Reset</button>
-                
+                <button onClick={() => setIsOpen(true)}>Reset</button>
+                <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+                    <p>Reset and lose all progress?</p>
+                    <button onClick={() => {
+                        window.sessionStorage.removeItem('questions')
+                        window.sessionStorage.removeItem('gameData')
+                        nav('/')
+                    }}>Reset</button>
+                </Modal>
                 
                 {/* next question button */}
                 <button onClick={() => {
