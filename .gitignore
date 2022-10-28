@@ -24,3 +24,5 @@ yarn-error.log*
 
 # temps
 plan.txt
+temp.css
+temp.css.map

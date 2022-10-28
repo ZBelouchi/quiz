@@ -24,9 +24,24 @@ section
     max-width: 1200px
 
 .radio-btn
+    @include debug(red)
     &__radio
+        display: none
         
-        
+    &__label
+        background: lightblue
+        &--checked
+            background: blue
+    &__icon
+        height: 100px
+        width: 100px
+        @include debug(green)
+        background-position:  center
+        background-size: 100px 100px  
+        @each $category, $img in $radio-btn-backgrounds
+            &[data-img="#{$category}"]
+                background-image: url($img)
+
         
 
 .game-box
