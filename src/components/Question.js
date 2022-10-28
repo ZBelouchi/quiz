@@ -84,7 +84,9 @@ export default function Answers() {
                 {/* next question button */}
                 <button onClick={() => {
                     // check if current question = total questions
-                    if (gameData.currentQuestion + 1 === gameData.questionTotal) {
+                    if (!gameData.hasAnswered) {
+                        return
+                    } else if (gameData.currentQuestion + 1 === gameData.questionTotal) {
                         // go to results page
                         nav('/results')
                     } else {
