@@ -1,25 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import useDeepCompareEffect from '../hooks/useDeepCompareEffect'
 
 import Modal from './Modal'
 
 export default function Answers() {
     const [status, setStatus] = useState([0, 0, 0, 0])
-    const [hasAnswered, setHasAnswered] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const nav = useNavigate()
+    const [gameData, setGameData] = useState(JSON.parse(window.sessionStorage.getItem('gameData')))
+    useDeepCompareEffect(() => {
+        window.sessionStorage.setItem('gameData', JSON.stringify(gameData))
+    }, [gameData])
     
-    // API responds with
-        // id
-        // correct answer
-        // 3 incorrect answers
-        // question
-    const gameData = JSON.parse(window.sessionStorage.getItem('gameData'))
     const question = JSON.parse(window.sessionStorage.getItem('questions'))[gameData.currentQuestion]
-    
     const [answers, setAnswers] = useState([question.correctAnswer, ...question.incorrectAnswers].sort(function(a, b){return 0.5 - Math.random()}))
     const correct = answers.indexOf(question.correctAnswer)
-
     const statusStyles = {
         // default
         0: {},
@@ -51,7 +47,8 @@ export default function Answers() {
                         className="question__choice"
                         onClick={() => setStatus(() => {
                             // prevent multiple submissions
-                            if (hasAnswered) {return status}
+
+                            if (gameData.hasAnswered) {return status}
 
                             // set default status
                             let newStatus = [0, 0, 0, 0]
@@ -62,9 +59,9 @@ export default function Answers() {
                             
                             if (index === correct) {
                                 // correct answer code
-                                window.sessionStorage.setItem('gameData', JSON.stringify({...gameData, currentScore: gameData.currentScore + 1}))
+                                setGameData({...gameData, currentScore: gameData.currentScore += 1})
                             }
-                            setHasAnswered(true)
+                            setGameData({...gameData, hasAnswered: true})
                             return newStatus
                         })}
                         style={statusStyles[status[index]]}
@@ -92,7 +89,9 @@ export default function Answers() {
                         nav('/results')
                     } else {
                         // increase current by one
-                        window.sessionStorage.setItem('gameData', JSON.stringify({...gameData, currentQuestion: gameData.currentQuestion + 1}))
+                        setGameData({...gameData, currentQuestion: gameData.currentQuestion += 1})
+                        // set hasAnswered back to false
+                        setGameData({...gameData, hasAnswered: false})
                         // reload
                         window.location.reload(false)
                     }

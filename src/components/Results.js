@@ -25,19 +25,14 @@ function Message(props) {
     }
 
     if (props.score > 80) {
-        console.log("test");
         return <p>great</p>
     } else if (props.score >= 60) {
-        console.log("test");
         return <p>decent</p>
     } else if (props.score >= 40) {
-        console.log("test");
         return <p>average</p>
     } else if (props.score >= 20) {
-        console.log("test");
         return <p>poor</p>
     } else if (props.score < 20) {
-        console.log("test");
         return <p>terrible</p>
     }
 }
