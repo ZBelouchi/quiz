@@ -36,6 +36,10 @@ export default function Options() {
     useEffect(() => {
     if (response) {
         // Call API
+        console.log(response)
+        console.log(response.category)
+        console.log(response.count)
+        console.log(response.difficulty)
         fetch(`https://the-trivia-api.com/api/questions?categories=${response.category}&limit=${response.count}&difficulty=${response.difficulty}`)
         .then(response => response.json())
         // take in response as json
@@ -56,19 +60,35 @@ export default function Options() {
      
     return (
         <section className="options">
+            <h1>Trivia Quiz</h1>
             <form className="options__form" onSubmit={handleSubmit}>
                 {/* category */}
-                <RadioButtons values={categories} name="category"/>
-                <hr />
+                <div className="options__field">
+                    <h2>Category:</h2>
+                    <RadioButtons values={categories} name="category"/>
+                </div>
                 {/* difficulty */}
-                <RadioButtons values={difficulties} name="difficulty"/>
-                {/* {difficulties.map((difficulty, index) => (<RadioButton index={index} list={difficulty} name={"difficulty"}/>))} */}
-                <hr />
+                <div className="options__field">
+                    <h2>Difficulty:</h2>
+                    <RadioButtons values={difficulties} name="difficulty"/>
+                </div>
                 {/* question count */}
-                <input type="number" min="0" max="100" name="count" id='opt-count' value={count} onChange={e => setCount(e.target.value)}/>
-                <hr />
+                <div className="options__field">
+                    <h2>Questions:</h2>
+                    <div className="flex">
+                        <button onClick={(e) => {
+                            e.preventDefault()
+                            setCount(count - 1)}
+                        }>-</button>
+                        <input type="number" min="0" max="100" name="count" id='opt-count' value={count} onChange={e => setCount(e.target.value)}/>
+                        <button onClick={(e) => {
+                            e.preventDefault()
+                            setCount(count + 1)}
+                        }>+</button>
+                    </div>
+                </div>
                 {/* submit */}
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Start" className='btn'/>
             </form>
         </section>
     )
@@ -78,30 +98,40 @@ function RadioButtons({values, name}) {
     const radioData = useRef([])
     const render = useForceUpdate()
 
-    return values.map((item, index) => {
-        return (
-            <div className="radio-btn" key={index} onClick={() => {
-                radioData.current = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                radioData.current[index] = 1
-                render()
-                console.log(radioData.current[index])
-            }}
-            >
-                <input 
-                    type="radio" 
-                    name={name}
-                    className={`radio-btn__radio`}
-                    id={`opt-${name}-${index}`}
-                />
-                <label htmlFor={`opt-${name}-${index}`}>
-                    <div className={`radio-btn__label ${radioData.current[index] === 1 ? 'radio-btn__label--checked' : ''}`}>
-                        <div 
-                            className="radio-btn__icon"
-                            data-img={item}
-                        ></div>
+    return (
+        <div className="options__radios flex">
+            {values.map((item, index) => {
+                return (
+                    <div 
+                        className="radio-btn options__radio" key={index} onClick={() => {
+                        radioData.current = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        radioData.current[index] = 1
+                        render()
+                        console.log(radioData.current[index])
+                    }}
+                    >
+                        <div className="radio-btn__button">
+                            <input 
+                                type="radio" 
+                                name={name}
+                                className={`radio-btn__radio`}
+                                value={values[index]}
+                                id={`opt-${name}-${index}`}
+                            />
+                            <label htmlFor={`opt-${name}-${index}`}>
+                                <div className={`radio-btn__label ${radioData.current[index] === 1 ? 'radio-btn__label--checked' : ''}`}>
+                                    <div 
+                                        className="radio-btn__icon"
+                                        data-img={item}
+                                    ></div>
+                                    </div>
+                            </label>
                         </div>
-                </label>
-            </div>
-        )
-    })
+                        <p className="radio-btn__subtitle subtitle">{values[index].replaceAll("_", " ").replaceAll("and", "&")}</p>
+                    </div>
+                )
+            })}
+        </div>
+    )
+    
 }
