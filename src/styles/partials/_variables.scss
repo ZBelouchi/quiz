@@ -1,3 +1,35 @@
+// colors
+$primary-dark: #161443;
+$primary-mid: #97b4ff;
+$primary-light: #e7f3ff;
+$secondary-mid: #fff1d8;
+$secondary-light: #ffdc95;
+
+$button-dark: #add7ff;
+$button-light: #d8ecff;
+$correct-dark: #3c951c;
+$correct-light: #74ff61;
+$incorrect-dark: #f12c2c;
+$incorrect-light: #ff9696;
+
+// fonts
+@font-face {
+    font-family: 'lexend-bold';
+    src: url('../../assets/fonts/lexend/static/Lexend-Bold.ttf');
+}
+$header: 'lexend-bold', sans-serif ;
+@font-face {
+    font-family: 'lexend';
+    src: url('../../assets/fonts/lexend/static/Lexend-Medium.ttf');
+}
+$normal: 'lexend', sans-serif;
+@font-face {
+    font-family: 'lexend-light';
+    src: url('../../assets/fonts/lexend/static/Lexend-Light.ttf');
+}
+$subtitle: 'lexend-light', sans-serif;
+
+// maps
 $radio-btn-backgrounds: (
     "arts_and_literature":  "../assets/icons/category/art.png",
     "film_and_tv":          "../assets/icons/category/film.png",

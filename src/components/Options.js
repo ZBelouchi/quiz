@@ -75,20 +75,20 @@ export default function Options() {
                 {/* question count */}
                 <div className="options__field">
                     <h2>Questions:</h2>
-                    <div className="flex">
-                        <button onClick={(e) => {
+                    <div className="options__count flex">
+                        <button className='options__step' onClick={(e) => {
                             e.preventDefault()
                             setCount(count - 1)}
                         }>-</button>
-                        <input type="number" min="0" max="100" name="count" id='opt-count' value={count} onChange={e => setCount(e.target.value)}/>
-                        <button onClick={(e) => {
+                        <input className='options__counter' type="number" min="0" max="100" name="count" id='opt-count' value={count} onChange={e => setCount(e.target.value)}/>
+                        <button className='options__step' onClick={(e) => {
                             e.preventDefault()
                             setCount(count + 1)}
                         }>+</button>
                     </div>
                 </div>
                 {/* submit */}
-                <input type="submit" value="Start" className='btn'/>
+                <input type="submit" value="Start" className='options__submit btn'/>
             </form>
         </section>
     )
@@ -99,7 +99,7 @@ function RadioButtons({values, name}) {
     const render = useForceUpdate()
 
     return (
-        <div className="options__radios flex">
+        <div className={`options__radios options__radios--${name} flex`}>
             {values.map((item, index) => {
                 return (
                     <div 
