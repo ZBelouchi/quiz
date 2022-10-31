@@ -7,12 +7,17 @@
     translate: -50% -50%;
 }
 
-@mixin button($up: $button-light, $down: $button-dark) {
-    background: $button-light;
-    border: 4px outset darken($button-light, 4);
+@mixin button($color: $button-light) {
+    $up: $color;
+    $down: darken($color, 10);
+    $font: darken($color, 70);
+    
+    background: $up;
+    border: 4px outset darken($up, 4);
     border-radius: 8px;
-    &--checked, &:active {
-        background: $button-dark;
-        border: 4px inset darken($button-dark, 4);
+    color: $font;
+    &--checked, &--down, &:active {
+        background: $down;
+        border: 4px inset darken($down, 4);
     }
 }

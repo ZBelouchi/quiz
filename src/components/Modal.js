@@ -1,13 +1,13 @@
 // import ReactDOM from 'react-dom'
 
-export default function Modal({open, children, onClose}) {
+export default function Modal({open, children, onClose, modalClass}) {
     const MODAL_STYLES = {
         position: 'fixed',
         top: '50%',
         left:'50%',
         translate: '-50% -50%',
         zIndex: 1000,
-        backgroundColor: 'gray',
+        backgroundColor: 'white',
         border: '2px solid black'
     }
     const OVERLAY_STYLES = {
@@ -26,12 +26,12 @@ export default function Modal({open, children, onClose}) {
     return (
         <>
             <div style={OVERLAY_STYLES}/>
-            <div style={MODAL_STYLES}>
+            <div style={MODAL_STYLES} className={modalClass}>
                 {children}
                 
-                <button onClick={() => {
+                {/* <button onClick={() => {
                     onClose()
-                }}>Cancel</button>
+                }}>Cancel</button> */}
             </div>
         </>//,
         // document.getElementById('portal')

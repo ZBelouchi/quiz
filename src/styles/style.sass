@@ -16,12 +16,19 @@ html
     border-radius: 12px
     width: 90%
     max-width: 600px
-    padding: 1em
+    // padding: 1em
     margin: 1em auto
     background: $primary-mid
-
+.container
+    margin: 1em
+    // @include debug(black)
+    &--top
+        margin-bottom: 0
+    &--bottom
+        margin-top: 0
 img
     max-width: 100%
+        
 h1, h2, h3
     font-family: $header
     text-align: center
@@ -30,7 +37,7 @@ h1, h2, h3
     text-transform: capitalize
     text-align: center
 .btn
-    font: 1em $normal
+    font: 0.8em $normal
     padding: 0.4em 1em
     display: block
     @include button
@@ -100,9 +107,67 @@ h1, h2, h3
         margin: auto
 
 .question
+    // @include debug(black)
+    &__progress
+        -webkit-appearance: none
+        appearance: none
+        width: 100%
+        height: 0.8em
+        border: 2px inset $primary-mid
+        // scale: 109% 100%
+        &::-webkit-progress-bar
+            background-color: $primary-light
+        &::-webkit-progress-value
+            background-color: blue
+            border-top-right-radius: 8px
+            border-bottom-right-radius: 8px
+        
+    &__status
+        justify-content: space-between
+    &__number, &__score
+    &__prompt
+        // @include debug(red)
+    &__choices
+        // @include debug(green)
+        flex-wrap: wrap
+        
+    &__choice
+        // @include debug(yellow)
+        @include button
+        width: 100%
+        // margin: 1em
+        &--correct
+            @include button($color: $correct-light)
+        &--incorrect
+            @include button($color: $incorrect-light)
+
+        @include sm
+            width: 50%
+    &__reset
+        @include button($color: red)
+        color: white
+    &__next
+
+.reset
+    background: $primary-light
+    padding: 1em
+    &__buttons
+        justify-content: center
+        margin: auto
+        flex-direction: column
+        @include sm
+            flex-direction: row
+    &__reset
+        @include button($color: red)
+        color: white
     
 .results
 
 .grid
 .flex
     display: flex
+
+@include sm
+    .row
+        display: flex
+

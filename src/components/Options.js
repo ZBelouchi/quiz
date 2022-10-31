@@ -59,7 +59,7 @@ export default function Options() {
     }, [response])
      
     return (
-        <section className="options">
+        <section className="container options">
             <h1>Trivia Quiz</h1>
             <form className="options__form" onSubmit={handleSubmit}>
                 {/* category */}
