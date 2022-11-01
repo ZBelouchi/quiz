@@ -1,23 +1,16 @@
 @use '../partials/variables' as *;
 
-@mixin center {
-    position: absolute;
-    top: 50%;
-    left: 50%; 
-    translate: -50% -50%;
-}
-
 @mixin button($color: $button, $dark-font: true) {
     $up: $color;
     $down: darken($color, 10);
     $font: if($dark-font, darken($color, 70), lighten($color, 50));
     
-    background: $up;
     border: 4px outset darken($up, 4);
     border-radius: 8px;
+    background: $up;
     color: $font;
     &:is(&--checked, &--down, &:active):not([data-status="disabled"]) {
-        background-color: $down;
         border: 4px inset darken($down, 4);
+        background-color: $down;
     }
 }

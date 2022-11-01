@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import useForceUpdate from '../hooks/useForceUpdate'
 
 export default function Options() {
-    const [response, setResponse] = useState(false)
     const [count, setCount] = useState(10)
+    const [response, setResponse] = useState(false)
     const nav = useNavigate()
+    
     const categories = [
         "general_knowledge",
         "arts_and_literature",
@@ -23,7 +25,6 @@ export default function Options() {
         "medium",
         "hard",
     ]
-    
     const handleSubmit = e => {
         e.preventDefault()
         setResponse({
@@ -32,7 +33,8 @@ export default function Options() {
             count: e.target.count.value
         })  
     }
-    // Begin Function
+
+    // Game Start Function
     useEffect(() => {
     if (response) {
         // Call API
@@ -71,17 +73,26 @@ export default function Options() {
                 <div className="options__field">
                     <h2>Questions:</h2>
                     <div className="options__count flex">
-                        <button className='options__step' data-status={count === 1 ? "disabled" : null} onClick={(e) => {
-                            e.preventDefault()
-                            if (count === 1) {return}
-                            setCount(count - 1)}
-                        }>-</button>
+                        {/* + button */}
+                        <button 
+                            className='options__step' data-status={count === 1 ? "disabled" : null} 
+                            onClick={(e) => {
+                                e.preventDefault()
+                                if (count === 1) {return}
+                                setCount(count - 1)}
+                            }
+                        >-</button>
+                        {/* count input */}
                         <input className='options__counter' type="number" min="0" max="100" name="count" id='opt-count' value={count} onChange={e => setCount(e.target.value)}/>
-                        <button className='options__step' data-status={count === 100 ? "disabled" : null} onClick={(e) => {
-                            e.preventDefault()
-                            if (count === 100) {return}
-                            setCount(count + 1)}
-                        }>+</button>
+                        {/* - button */}
+                        <button 
+                            className='options__step' data-status={count === 100 ? "disabled" : null} 
+                            onClick={(e) => {
+                                e.preventDefault()
+                                if (count === 100) {return}
+                                setCount(count + 1)}
+                            }
+                        >+</button>
                     </div>
                 </div>
                 {/* submit */}
@@ -100,30 +111,25 @@ function RadioButtons({values, name}) {
             {values.map((item, index) => {
                 return (
                     <div 
-                        className="radio-btn options__radio" key={index} onClick={() => {
-                        radioData.current = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-                        radioData.current[index] = 1
-                        render()
-                        console.log(radioData.current[index])
-                    }}
+                        className="radio-btn options__radio" key={index} 
+                        onClick={() => {
+                            radioData.current = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                            radioData.current[index] = 1
+                            render()
+                            console.log(radioData.current[index])
+                        }}
                     >
                         <div className="radio-btn__button">
-                            <input 
-                                type="radio" 
-                                name={name}
-                                className={`radio-btn__radio`}
-                                value={values[index]}
-                                id={`opt-${name}-${index}`}
-                            />
+                            {/* button */}
+                            <input type="radio" name={name} className={`radio-btn__radio`} value={values[index]} id={`opt-${name}-${index}`}/>
+                            {/* label */}
                             <label htmlFor={`opt-${name}-${index}`}>
                                 <div className={`radio-btn__label ${radioData.current[index] === 1 ? 'radio-btn__label--checked' : ''}`}>
-                                    <div 
-                                        className="radio-btn__icon"
-                                        data-img={item}
-                                    ></div>
-                                    </div>
+                                    <div className="radio-btn__icon" data-img={item}></div>
+                                </div>
                             </label>
                         </div>
+                        {/* text */}
                         <p className="radio-btn__subtitle subtitle">{values[index].replaceAll("_", " ").replaceAll("and", "&")}</p>
                     </div>
                 )

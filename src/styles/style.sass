@@ -1,7 +1,6 @@
 @use './partials/breakpoints' as *
 @use './partials/mixins' as *
 @use './partials/variables' as *
-@use './partials/debug' as *
 
 *, *::before, *::after
     box-sizing: border-box
@@ -11,118 +10,105 @@ html
     color: $white
     font-family: $normal
     background: $white
-
-// Universal
-.game-box
-    // @include debug(black)
-    border-radius: 12px
-    width: 90%
-    max-width: 650px
-    padding: 0.4em 0
-    margin: 1em auto
-    background: $blue
-.container
-    margin: 1em
-    // @include debug(black)
-    &--top
-        margin-bottom: 0
-    &--bottom
-        margin-top: 0
+    
 img
     max-width: 100%    
 h1, h2, h3
     font-family: $header
     text-align: center
+button
+    font: 0.8em $normal
+    @include button
+
+.game-box
+    padding: 0.4em 0
+    width: 90%
+    max-width: 650px
+    border-radius: 12px
+    margin: 1em auto
+    background: $blue
+.container
+    margin: 1em
+    &--top
+        margin-bottom: 0
+    &--bottom
+        margin-top: 0
 .subtitle
     font-family: $subtitle
     text-transform: capitalize
     text-align: center
 .btn
     font: 0.8em $normal
+    display: block
     padding: 0.4em 1em
     margin: 0.2em
-    display: block
     @include button
 .radio-btn
     font-size: 0.8rem
-    @include xs
-        font-size: 1.2rem
-    // @include debug(magenta)
     width: 5.7em
     margin: 0.4em 0
-    &__button
-        // @include debug(red)
+    @include xs
+        font-size: 1.2rem
     &__label
-        // @include debug(orange)
         width: fit-content
         margin: auto
         @include button
     &__radio
-        // @include debug(pink)
         display: none
     &__icon
-        // @include debug(green)
-        $icon-size: 4em
         height: $icon-size
         width: $icon-size
-        background-position:  center
         background-size: ($icon-size * 0.7) ($icon-size * 0.7)
+        background-position: center
         background-repeat: no-repeat
         @each $category, $img in $radio-btn-backgrounds
             &[data-img="#{$category}"]
                 background-image: url($img)
     &__subtitle
-        // @include debug(blue)
-        max-width: 100%
         font-size: 0.7rem
+        max-width: 100%
 .modal
+    z-index: 101
     position: fixed
     top: 50%
     left: 50%
     translate: -50% -50%
-    z-index: 101
-    background-color: white
     border: 2px solid black
+    background-color: white
 .modal-overlay
+    z-index: 100
     position: fixed
     top: 0
-    left: 0
     right: 0
     bottom: 0
+    left: 0
     background-color: #000000b3
-    z-index: 100
 
 // Options
 .options
     &__title
         border-bottom: 2px solid $tan
     &__field
-        // @include debug(black)
         padding: 0.4em
     &__radios
-        // @include debug(gray)
         flex-wrap: wrap
         justify-content: space-around
         margin: auto
         &--category
-            // max-width: 20em
         &--difficulty
             max-width: 15em
-    &__radio
-        // @include debug(purple)
     &__count
-        // @include debug(purple)
         font-size: 0.8rem
         justify-content: center
     &__counter
         font: 1.2em $subtitle
         width: 3em
         margin: 0 0.5em
-        text-align: center
-        background-color: $button
         border: 2px inset $blue
         border-radius: 8px
+        background-color: $button
         color: $black
+        text-align: center
         &:focus
             outline: none
         &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
@@ -130,50 +116,36 @@ h1, h2, h3
     &__step
         font: 1em $subtitle
         @include button
-
     &__submit
         margin: auto
 
 // Question
 .question
     font-size: 0.8rem
-    // @include debug(black)
+    &__status
+        justify-content: space-between
     &__progress
         -webkit-appearance: none
         appearance: none
         width: 100%
         height: 0.8em
         border: 2px inset $blue
-        // scale: 109% 100%
         &::-webkit-progress-bar
             background-color: $tan
         &::-webkit-progress-value
             background-color: $pink
             border-top-right-radius: 8px
             border-bottom-right-radius: 8px
-        
-    &__status
-        justify-content: space-between
-    &__number, &__score
-    &__prompt
-        // @include debug(red)
     &__choices
-        // @include debug(green)
         flex-wrap: wrap
-        
     &__choice
-        // @include debug(yellow)
-        @include button
         width: 100%
         min-height: 3em
-        
-        // margin: 1em
+        @include button
         &--correct
             @include button($color: $correct)
         &--incorrect
             @include button($color: $incorrect)
-            
-
         @include md
             width: 50%
     &__reset
@@ -181,38 +153,29 @@ h1, h2, h3
     &__next
         @include button($color: $pink, $dark-font: false)
 .reset
-    background-color: $purple
     padding: 1em
-    &__buttons
-
+    background-color: $purple
     &__reset
         @include button($color: $red, $dark-font: false)
-
 
 // Results
 .results
     &__score, &__message
         text-align: center
+    &__medal-card
+        display: block
+        width: 190px
+        padding: 0.2em
+        margin: auto
+    &__subtitle
+        font-size: 0.8rem
+        text-transform: capitalize
+        text-align: center
     &__restart
         margin: 1em auto
         @include button($tan)
 
-    &__medal-card
-        // @include debug(lime)
-        padding: 0.2em
-        display: block
-        width: 190px
-        // max-width:  
-        margin: auto
-    &__medal
-        // @include debug(yellow)
-    &__subtitle
-        text-transform: capitalize
-        text-align: center
-        font-size: 0.8rem
-
 // Layout
-.grid
 .flex
     display: flex
 
