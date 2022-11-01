@@ -7,10 +7,10 @@
     translate: -50% -50%;
 }
 
-@mixin button($color: $button) {
+@mixin button($color: $button, $dark-font: true) {
     $up: $color;
     $down: darken($color, 10);
-    $font: darken($color, 70);
+    $font: if($dark-font, darken($color, 70), lighten($color, 50));
     
     background: $up;
     border: 4px outset darken($up, 4);

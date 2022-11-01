@@ -119,11 +119,14 @@ h1, h2, h3
         width: 3em
         margin: 0 0.5em
         text-align: center
-        background-color: $white
+        background-color: $button
         border: 2px inset $blue
         border-radius: 8px
+        color: $black
         &:focus
             outline: none
+        &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+            appearance: none
     &__step
         font: 1em $subtitle
         @include button
@@ -174,17 +177,16 @@ h1, h2, h3
         @include md
             width: 50%
     &__reset
-        @include button($color: $red)
-        color: white
+        @include button($color: $red, $dark-font: false)
     &__next
+        @include button($color: $pink, $dark-font: false)
 .reset
     background-color: $purple
     padding: 1em
     &__buttons
 
     &__reset
-        @include button($color: $red)
-        color: white
+        @include button($color: $red, $dark-font: false)
 
 
 // Results

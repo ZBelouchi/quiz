@@ -71,13 +71,15 @@ export default function Options() {
                 <div className="options__field">
                     <h2>Questions:</h2>
                     <div className="options__count flex">
-                        <button className='options__step' onClick={(e) => {
+                        <button className='options__step' data-status={count === 1 ? "disabled" : null} onClick={(e) => {
                             e.preventDefault()
+                            if (count === 1) {return}
                             setCount(count - 1)}
                         }>-</button>
                         <input className='options__counter' type="number" min="0" max="100" name="count" id='opt-count' value={count} onChange={e => setCount(e.target.value)}/>
-                        <button className='options__step' onClick={(e) => {
+                        <button className='options__step' data-status={count === 100 ? "disabled" : null} onClick={(e) => {
                             e.preventDefault()
+                            if (count === 100) {return}
                             setCount(count + 1)}
                         }>+</button>
                     </div>

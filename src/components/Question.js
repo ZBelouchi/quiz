@@ -74,6 +74,21 @@ export default function Answers() {
                 </div>
 
                 <div className="question__buttons row row--btn">
+                    {/* reset button */}
+                    <button className='question__reset btn' onClick={() => setIsOpen(true)}>Reset</button>
+                    <Modal open={isOpen} onClose={() => setIsOpen(false)} modalClass="reset">
+                        <h2>Reset and lose all progress?</h2>
+                        <div className="reset__buttons row row--btn">
+                            <button className='reset__reset btn' onClick={() => {
+                                window.sessionStorage.removeItem('questions')
+                                window.sessionStorage.removeItem('gameData')
+                                nav('/')
+                            }}>Reset</button>
+
+                            <button className='reset__cancel btn' onClick={() => {setIsOpen(false)}}>Cancel</button>
+                        </div>
+                    </Modal>
+
                     {/* next question button */}
                     <button className='question__next btn' onClick={() => {
                         // check if current question = total questions
@@ -93,22 +108,8 @@ export default function Answers() {
                             window.location.reload(false)
                         }
                         
-                    }}>Next Question</button>
+                    }}>{gameData.current.currentQuestion + 1 === gameData.current.questionTotal ? "Results" : "Next Question"}</button>
 
-                    {/* reset button */}
-                    <button className='question__reset btn' onClick={() => setIsOpen(true)}>Reset</button>
-                    <Modal open={isOpen} onClose={() => setIsOpen(false)} modalClass="reset">
-                        <h2>Reset and lose all progress?</h2>
-                        <div className="reset__buttons row row--btn">
-                            <button className='reset__cancel btn' onClick={() => {setIsOpen(false)}}>Cancel</button>
-
-                            <button className='reset__reset btn' onClick={() => {
-                                window.sessionStorage.removeItem('questions')
-                                window.sessionStorage.removeItem('gameData')
-                                nav('/')
-                            }}>Reset</button>
-                        </div>
-                    </Modal>
                 </div>
             </div>
 
