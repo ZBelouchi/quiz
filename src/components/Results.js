@@ -4,15 +4,43 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Results() {
     const gameData = JSON.parse(window.sessionStorage.getItem('gameData'))
-    const scorePercentage = (gameData.currentScore / gameData.questionTotal)* 100
+    const scorePercentage = ((gameData.currentScore / gameData.questionTotal)* 100).toFixed(2)
     const nav = useNavigate()
+    const text = useRef()
+    const medal = useRef()
+
+    if (scorePercentage == 100) {
+        text.current = "you got a perfect score! you sure know your trivia!"
+        medal.current = "platinum"
+    } else if (scorePercentage >= 80) {
+        text.current = "you did great! but you could go even higher!"
+        medal.current = "gold"
+    } else if (scorePercentage >= 60) {
+        text.current = "pretty decent, but there's always room for improvement!"
+        medal.current = "silver"
+    } else if (scorePercentage >= 40) {
+        text.current = "Not bad, but not good either. Your score was average."
+        medal.current = "bronze"
+    } else if (scorePercentage >= 20) {
+        text.current = "That was pretty poor. Maybe one more try?"
+        medal.current = "stone"
+    } else if (scorePercentage < 20) {
+        text.current = "That was terrible! Maybe give it another go?"
+        medal.current = "cardboard"
+    }
     
   return (
     <div className="results">
         <h1>Results!</h1>
         {/* score */}
         <p className='results__score'>You got {gameData.currentScore} correct answers ({scorePercentage}%)</p>
-        <Message score={scorePercentage} />
+        <div className="results__medal-card">
+            <img src={require(`../assets/icons/results/${medal.current}.png`)} alt={`${medal.current} medal`} className="results__medal" />
+            <p className='results__subtitle'>{medal.current} Medal</p>
+        </div>
+        <div className="results__message">
+            <p>{text.current}</p>
+        </div>
         <button variant="contained" className='results__restart btn' onClick={() => {
             window.sessionStorage.removeItem('questions')
             window.sessionStorage.removeItem('gameData')
@@ -23,26 +51,4 @@ export default function Results() {
     
             
   )
-}
-
-function Message(props) {
-    const rank = useRef()
-
-    if (props.score > 80) {
-        rank.current = "Great"
-    } else if (props.score >= 60) {
-        rank.current = "Decent"
-    } else if (props.score >= 40) {
-        rank.current = "Average"
-    } else if (props.score >= 20) {
-        rank.current = "Poor"
-    } else if (props.score < 20) {
-        rank.current = "Terrible"
-    }
-
-    return (
-        <div className="results__message">
-            <p>You did {rank.current}</p>
-        </div>
-    )
 }
