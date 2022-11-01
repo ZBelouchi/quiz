@@ -7,7 +7,7 @@
     translate: -50% -50%;
 }
 
-@mixin button($color: $button-light) {
+@mixin button($color: $button) {
     $up: $color;
     $down: darken($color, 10);
     $font: darken($color, 70);
@@ -16,8 +16,8 @@
     border: 4px outset darken($up, 4);
     border-radius: 8px;
     color: $font;
-    &--checked, &--down, &:active {
-        background: $down;
+    &:is(&--checked, &--down, &:active):not([data-status="disabled"]) {
+        background-color: $down;
         border: 4px inset darken($down, 4);
     }
 }

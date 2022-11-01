@@ -7,10 +7,10 @@ export default function Options() {
     const [count, setCount] = useState(10)
     const nav = useNavigate()
     const categories = [
+        "general_knowledge",
         "arts_and_literature",
         "film_and_tv",
         "food_and_drink",
-        "general_knowledge",
         "geography",
         "history",
         "music",
@@ -27,8 +27,8 @@ export default function Options() {
     const handleSubmit = e => {
         e.preventDefault()
         setResponse({
-            category: e.target.category.value,
-            difficulty: e.target.difficulty.value,
+            category: e.target.category.value || 'general_knowledge',
+            difficulty: e.target.difficulty.value || 'easy',
             count: e.target.count.value
         })  
     }
@@ -36,16 +36,11 @@ export default function Options() {
     useEffect(() => {
     if (response) {
         // Call API
-        console.log(response)
-        console.log(response.category)
-        console.log(response.count)
-        console.log(response.difficulty)
         fetch(`https://the-trivia-api.com/api/questions?categories=${response.category}&limit=${response.count}&difficulty=${response.difficulty}`)
         .then(response => response.json())
         // take in response as json
         .then(json => {
             // store json in session storage
-            console.log(json)
             window.sessionStorage.setItem('questions', JSON.stringify(json))
             window.sessionStorage.setItem('gameData', JSON.stringify({
                 currentQuestion: 0,
@@ -60,7 +55,7 @@ export default function Options() {
      
     return (
         <section className="container options">
-            <h1>Trivia Quiz</h1>
+            <h1 className='options__title'>Trivia Quiz</h1>
             <form className="options__form" onSubmit={handleSubmit}>
                 {/* category */}
                 <div className="options__field">
@@ -95,7 +90,7 @@ export default function Options() {
 }
 
 function RadioButtons({values, name}) {
-    const radioData = useRef([])
+    const radioData = useRef([1])
     const render = useForceUpdate()
 
     return (

@@ -1,8 +1,8 @@
 $breakpoints: (
-    "xs": 0,
-    "sm": 500px,
-    "md" : 800px,
-    "lg" : 1100px
+    "xs" : 0,
+    "sm" : 320px,
+    "md" : 500px,
+    "lg" : 800px
 );
 
 @mixin xs {

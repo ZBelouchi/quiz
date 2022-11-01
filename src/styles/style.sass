@@ -8,17 +8,19 @@
     margin: 0
 html
     font-size: 25px
+    color: $white
     font-family: $normal
-    background: $primary-light
+    background: $white
 
+// Universal
 .game-box
     // @include debug(black)
     border-radius: 12px
     width: 90%
-    max-width: 600px
-    // padding: 1em
+    max-width: 650px
+    padding: 0.4em 0
     margin: 1em auto
-    background: $primary-mid
+    background: $blue
 .container
     margin: 1em
     // @include debug(black)
@@ -27,8 +29,7 @@ html
     &--bottom
         margin-top: 0
 img
-    max-width: 100%
-        
+    max-width: 100%    
 h1, h2, h3
     font-family: $header
     text-align: center
@@ -39,16 +40,18 @@ h1, h2, h3
 .btn
     font: 0.8em $normal
     padding: 0.4em 1em
+    margin: 0.2em
     display: block
     @include button
 .radio-btn
-    font-size: 0.5rem
+    font-size: 0.8rem
+    @include xs
+        font-size: 1.2rem
     // @include debug(magenta)
-    width: 6em
-    margin: 0.4em
+    width: 5.7em
+    margin: 0.4em 0
     &__button
         // @include debug(red)
-        // background: 
     &__label
         // @include debug(orange)
         width: fit-content
@@ -71,9 +74,28 @@ h1, h2, h3
     &__subtitle
         // @include debug(blue)
         max-width: 100%
+        font-size: 0.7rem
+.modal
+    position: fixed
+    top: 50%
+    left: 50%
+    translate: -50% -50%
+    z-index: 101
+    background-color: white
+    border: 2px solid black
+.modal-overlay
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: #000000b3
+    z-index: 100
 
-
+// Options
 .options
+    &__title
+        border-bottom: 2px solid $tan
     &__field
         // @include debug(black)
         padding: 0.4em
@@ -83,9 +105,9 @@ h1, h2, h3
         justify-content: space-around
         margin: auto
         &--category
-            max-width: 500px
+            // max-width: 20em
         &--difficulty
-            max-width: 300px
+            max-width: 15em
     &__radio
         // @include debug(purple)
     &__count
@@ -93,10 +115,13 @@ h1, h2, h3
         font-size: 0.8rem
         justify-content: center
     &__counter
-        font: 1em $subtitle
+        font: 1.2em $subtitle
         width: 3em
         margin: 0 0.5em
         text-align: center
+        background-color: $white
+        border: 2px inset $blue
+        border-radius: 8px
         &:focus
             outline: none
     &__step
@@ -106,19 +131,21 @@ h1, h2, h3
     &__submit
         margin: auto
 
+// Question
 .question
+    font-size: 0.8rem
     // @include debug(black)
     &__progress
         -webkit-appearance: none
         appearance: none
         width: 100%
         height: 0.8em
-        border: 2px inset $primary-mid
+        border: 2px inset $blue
         // scale: 109% 100%
         &::-webkit-progress-bar
-            background-color: $primary-light
+            background-color: $tan
         &::-webkit-progress-value
-            background-color: blue
+            background-color: $pink
             border-top-right-radius: 8px
             border-bottom-right-radius: 8px
         
@@ -135,42 +162,67 @@ h1, h2, h3
         // @include debug(yellow)
         @include button
         width: 100%
+        min-height: 3em
+        
         // margin: 1em
         &--correct
-            @include button($color: $correct-light)
+            @include button($color: $correct)
         &--incorrect
-            @include button($color: $incorrect-light)
+            @include button($color: $incorrect)
+            
 
-        @include sm
+        @include md
             width: 50%
     &__reset
-        @include button($color: red)
+        @include button($color: $red)
         color: white
     &__next
 .reset
-    background: $primary-light
+    background-color: $purple
     padding: 1em
     &__buttons
-        justify-content: center
-        margin: auto
-        flex-direction: column
-        @include sm
-            flex-direction: row
+
     &__reset
-        @include button($color: red)
+        @include button($color: $red)
         color: white
-    
+
+
+// Results
 .results
     &__score, &__message
         text-align: center
     &__restart
-        margin: auto
+        margin: 1em auto
+        @include button($tan)
 
+    &__medal-card
+        // @include debug(lime)
+        padding: 0.2em
+        display: block
+        width: 190px
+        // max-width:  
+        margin: auto
+    &__medal
+        // @include debug(yellow)
+    &__subtitle
+        text-transform: capitalize
+        text-align: center
+        font-size: 0.8rem
+
+// Layout
 .grid
 .flex
     display: flex
 
+// Media Queries
 @include sm
     .row
         display: flex
+.row--btn
+    margin: 0.8em auto
+    justify-content: center
+    button
+        width: 100%
+        @include md
+            width: fit-content
 

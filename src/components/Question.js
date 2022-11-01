@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import useDeepCompareEffect from '../hooks/useDeepCompareEffect'
+import useDeepCompareLayoutEffect from '../hooks/useDeepCompareLayoutEffect'
 
 import Modal from './Modal'
 
@@ -8,12 +9,14 @@ export default function Answers() {
     const [status, setStatus] = useState([0, 0, 0, 0])
     const [isOpen, setIsOpen] = useState(false)
     const nav = useNavigate()
-    const [gameData, setGameData] = useState(JSON.parse(window.sessionStorage.getItem('gameData')))
-    useDeepCompareEffect(() => {
-        window.sessionStorage.setItem('gameData', JSON.stringify(gameData))
-    }, [gameData])
+    // const [gameData, setGameData] = useState(JSON.parse(window.sessionStorage.getItem('gameData')))
+    const gameData = useRef(JSON.parse(window.sessionStorage.getItem('gameData')))
+    // useDeepCompareLayoutEffect(() => {
+    //     window.sessionStorage.setItem('gameData', JSON.stringify(gameData.current))
+    //     console.log("updated storage");
+    // }, [gameData.current])
     
-    const question = JSON.parse(window.sessionStorage.getItem('questions'))[gameData.currentQuestion]
+    const question = JSON.parse(window.sessionStorage.getItem('questions'))[gameData.current.currentQuestion]
     const [answers, setAnswers] = useState([question.correctAnswer, ...question.incorrectAnswers].sort(function(a, b){return 0.5 - Math.random()}))
     const correct = answers.indexOf(question.correctAnswer)
     const statusClasses = {
@@ -25,14 +28,14 @@ export default function Answers() {
     return (
         <section className='question'>
             <div className="container container--top">
-                <div className="question__status flex">
+                <div className="question__status row">
                     {/* question number */}
-                    <p className='question__number'>Question {gameData.currentQuestion + 1} of {gameData.questionTotal}</p>
+                    <p className='question__number'>Question {gameData.current.currentQuestion + 1} of {gameData.current.questionTotal}</p>
                     {/* score */}
-                    <p className='question__score'>Score: {gameData.currentScore}</p>
+                    <p className='question__score'>Score: {gameData.current.currentScore}</p>
                 </div>
             </div>
-            <progress className='question__progress' value={gameData.currentQuestion} max={gameData.questionTotal}>{(gameData.currentScore / gameData.questionTotal)* 100}%</progress>
+            <progress className='question__progress' value={gameData.current.currentQuestion} max={gameData.current.questionTotal}>{(gameData.current.currentScore / gameData.current.questionTotal)* 100}%</progress>
             <div className="container container--bottom">
                 {/* question */}
                 <h2 className="question__prompt">{question.question}</h2>
@@ -42,10 +45,11 @@ export default function Answers() {
                     {answers.map((text, index) => (
                         <p 
                             className={`question__choice ${statusClasses[status[index]]}`}
+                            key={index}
+                            data-status={gameData.current.hasAnswered ? "disabled" : null}
                             onClick={() => setStatus(() => {
                                 // prevent multiple submissions
-
-                                if (gameData.hasAnswered) {return status}
+                                if (gameData.current.hasAnswered) {return status}
 
                                 // set default status
                                 let newStatus = [0, 0, 0, 0]
@@ -56,49 +60,55 @@ export default function Answers() {
                                 
                                 if (index === correct) {
                                     // correct answer code
-                                    setGameData({...gameData, currentScore: gameData.currentScore += 1})
+                                    // setGameData({...gameData, currentScore: gameData.currentScore += 1})
+                                    gameData.current.currentScore += 1
                                 }
-                                setGameData({...gameData, hasAnswered: true})
+                                // setGameData({...gameData, hasAnswered: true})
+                                gameData.current.hasAnswered = true
+                                window.sessionStorage.setItem('gameData', JSON.stringify(gameData.current))
+
                                 return newStatus
                             })}
                         >{text}</p>
                     ))}
                 </div>
 
-                <div className="question__buttons flex">
-                    {/* reset button */}
-                    <button className='question__reset btn' onClick={() => setIsOpen(true)}>Reset</button>
-                    <Modal open={isOpen} onClose={() => setIsOpen(false)} modalClass="reset">
-                        <h2>Reset and lose all progress?</h2>
-                        <div className="reset__buttons flex">
-                            <button className='reset__reset btn' onClick={() => {
-                                window.sessionStorage.removeItem('questions')
-                                window.sessionStorage.removeItem('gameData')
-                                nav('/')
-                            }}>Reset</button>
-
-                            <button className='reset__cancel btn' onClick={() => {setIsOpen(false)}}>Cancel</button>
-                        </div>
-                    </Modal>
-                    
+                <div className="question__buttons row row--btn">
                     {/* next question button */}
                     <button className='question__next btn' onClick={() => {
                         // check if current question = total questions
-                        if (!gameData.hasAnswered) {
+                        if (!gameData.current.hasAnswered) {
                             return
-                        } else if (gameData.currentQuestion + 1 === gameData.questionTotal) {
+                        } else if (gameData.current.currentQuestion + 1 === gameData.current.questionTotal) {
                             // go to results page
                             nav('/results')
                         } else {
                             // increase current by one
-                            setGameData({...gameData, currentQuestion: gameData.currentQuestion += 1})
+                            gameData.current.currentQuestion += 1
                             // set hasAnswered back to false
-                            setGameData({...gameData, hasAnswered: false})
+                            gameData.current.hasAnswered = false
+                            // save data to storage
+                            window.sessionStorage.setItem('gameData', JSON.stringify(gameData.current))
                             // reload
                             window.location.reload(false)
                         }
                         
                     }}>Next Question</button>
+
+                    {/* reset button */}
+                    <button className='question__reset btn' onClick={() => setIsOpen(true)}>Reset</button>
+                    <Modal open={isOpen} onClose={() => setIsOpen(false)} modalClass="reset">
+                        <h2>Reset and lose all progress?</h2>
+                        <div className="reset__buttons row row--btn">
+                            <button className='reset__cancel btn' onClick={() => {setIsOpen(false)}}>Cancel</button>
+
+                            <button className='reset__reset btn' onClick={() => {
+                                window.sessionStorage.removeItem('questions')
+                                window.sessionStorage.removeItem('gameData')
+                                nav('/')
+                            }}>Reset</button>
+                        </div>
+                    </Modal>
                 </div>
             </div>
 
