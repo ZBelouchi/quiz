@@ -21,8 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# temps
-plan.txt
-temp.css
-temp.css.map
