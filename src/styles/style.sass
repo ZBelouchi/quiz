@@ -1,0 +1,193 @@
+@use './partials/breakpoints' as *
+@use './partials/mixins' as *
+@use './partials/variables' as *
+
+*, *::before, *::after
+    box-sizing: border-box
+    margin: 0
+html
+    font-size: 25px
+    color: $white
+    font-family: $normal
+    background: $white
+    
+img
+    max-width: 100%    
+h1, h2, h3
+    font-family: $header
+    text-align: center
+button
+    font: 0.8em $normal
+    @include button
+
+.game-box
+    padding: 0.4em 0
+    width: 90%
+    max-width: 650px
+    border-radius: 12px
+    margin: 1em auto
+    background: $blue
+.container
+    margin: 1em
+    &--top
+        margin-bottom: 0
+    &--bottom
+        margin-top: 0
+.subtitle
+    font-family: $subtitle
+    text-transform: capitalize
+    text-align: center
+.btn
+    font: 0.8em $normal
+    display: block
+    padding: 0.4em 1em
+    margin: 0.2em
+    @include button
+.radio-btn
+    font-size: 0.8rem
+    width: 5.7em
+    margin: 0.4em 0
+    @include xs
+        font-size: 1.2rem
+    &__label
+        width: fit-content
+        margin: auto
+        @include button
+    &__radio
+        display: none
+    &__icon
+        height: $icon-size
+        width: $icon-size
+        background-size: ($icon-size * 0.7) ($icon-size * 0.7)
+        background-position: center
+        background-repeat: no-repeat
+        @each $category, $img in $radio-btn-backgrounds
+            &[data-img="#{$category}"]
+                background-image: url($img)
+    &__subtitle
+        font-size: 0.7rem
+        max-width: 100%
+.modal
+    z-index: 101
+    position: fixed
+    top: 50%
+    left: 50%
+    translate: -50% -50%
+    border: 2px solid black
+    background-color: white
+.modal-overlay
+    z-index: 100
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    background-color: #000000b3
+
+// Options
+.options
+    &__title
+        border-bottom: 2px solid $tan
+    &__field
+        padding: 0.4em
+    &__radios
+        flex-wrap: wrap
+        justify-content: space-around
+        margin: auto
+        &--category
+        &--difficulty
+            max-width: 15em
+    &__count
+        font-size: 0.8rem
+        justify-content: center
+    &__counter
+        font: 1.2em $subtitle
+        width: 3em
+        margin: 0 0.5em
+        border: 2px inset $blue
+        border-radius: 8px
+        background-color: $button
+        color: $black
+        text-align: center
+        &:focus
+            outline: none
+        &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+            appearance: none
+    &__step
+        font: 1em $subtitle
+        @include button
+    &__submit
+        margin: auto
+
+// Question
+.question
+    font-size: 0.8rem
+    &__status
+        justify-content: space-between
+    &__progress
+        -webkit-appearance: none
+        appearance: none
+        width: 100%
+        height: 0.8em
+        border: 2px inset $blue
+        &::-webkit-progress-bar
+            background-color: $tan
+        &::-webkit-progress-value
+            background-color: $pink
+            border-top-right-radius: 8px
+            border-bottom-right-radius: 8px
+    &__choices
+        flex-wrap: wrap
+    &__choice
+        width: 100%
+        min-height: 3em
+        @include button
+        &--correct
+            @include button($color: $correct)
+        &--incorrect
+            @include button($color: $incorrect)
+        @include md
+            width: 50%
+    &__reset
+        @include button($color: $red, $dark-font: false)
+    &__next
+        @include button($color: $pink, $dark-font: false)
+.reset
+    padding: 1em
+    background-color: $purple
+    &__reset
+        @include button($color: $red, $dark-font: false)
+
+// Results
+.results
+    &__score, &__message
+        text-align: center
+    &__medal-card
+        display: block
+        width: 190px
+        padding: 0.2em
+        margin: auto
+    &__subtitle
+        font-size: 0.8rem
+        text-transform: capitalize
+        text-align: center
+    &__restart
+        margin: 1em auto
+        @include button($tan)
+
+// Layout
+.flex
+    display: flex
+
+// Media Queries
+@include sm
+    .row
+        display: flex
+.row--btn
+    margin: 0.8em auto
+    justify-content: center
+    button
+        width: 100%
+        @include md
+            width: fit-content
+
