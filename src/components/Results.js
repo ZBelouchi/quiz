@@ -32,7 +32,7 @@ export default function Results() {
         <div className="results">
             <h1>Results!</h1>
             {/* score */}
-            <p className='results__score'>You got {gameData.currentScore} correct answers ({scorePercentage}%)</p>
+            <p className='results__score'>You got {gameData.currentScore} correct answer{gameData.currentScore > 1 ? "s" : null} ({scorePercentage}%)</p>
             {/* results summary */}
             <div className="results__medal-card">
                 {/* medal */}
