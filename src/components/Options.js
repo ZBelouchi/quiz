@@ -83,7 +83,11 @@ export default function Options() {
                             }
                         >-</button>
                         {/* count input */}
-                        <input className='options__counter' type="number" min="0" max="100" name="count" id='opt-count' value={count} onChange={e => setCount(e.target.value)}/>
+                        <input className='options__counter' type="number" min="0" max="100" name="count" id='opt-count' value={count} onChange={e => setCount(() => {
+                            if (Number(e.target.value) < 0) {return 0}
+                            if (Number(e.target.value) > 100) {return 100}
+                            return Number(e.target.value)
+                        })}/>
                         {/* - button */}
                         <button 
                             className='options__step' data-status={count === 100 ? "disabled" : null} 

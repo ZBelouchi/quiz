@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
+import { Routes, Route, HashRouter as Router } from 'react-router-dom'
 import Options from './Options'
 import Question from './Question'
 import Results from './Results'

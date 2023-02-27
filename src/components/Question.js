@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Modal from './Modal'
@@ -8,6 +8,7 @@ export default function Answers() {
     const question = JSON.parse(window.sessionStorage.getItem('questions'))[gameData.current.currentQuestion]
     const answers = useRef([question.correctAnswer, ...question.incorrectAnswers].sort(function(a, b){return 0.5 - Math.random()}))
     const correct = answers.current.indexOf(question.correctAnswer)
+    const [progressValue, setProgressValue] = useState(gameData.current.currentQuestion)
     
     const [status, setStatus] = useState([0, 0, 0, 0])
     const [isOpen, setIsOpen] = useState(false)
@@ -30,7 +31,14 @@ export default function Answers() {
                 </div>
             </div>
             {/* progress bar */}
-            <progress className='question__progress' value={gameData.current.currentQuestion} max={gameData.current.questionTotal}>{(gameData.current.currentScore / gameData.current.questionTotal)* 100}%</progress>
+            <progress 
+                className='question__progress' 
+                value={progressValue} 
+                max={gameData.current.questionTotal}
+            >
+                {(gameData.current.currentScore / gameData.current.questionTotal)* 100}%
+            </progress>
+
             <div className="container container--bottom">
                 {/* question */}
                 <h2 className="question__prompt">{question.question}</h2>
@@ -57,6 +65,9 @@ export default function Answers() {
                                 // mark as having answered the question
                                 gameData.current.hasAnswered = true
                                 window.sessionStorage.setItem('gameData', JSON.stringify(gameData.current))
+
+                                // move progress bar
+                                setProgressValue(gameData.current.currentQuestion + 1)
 
                                 return newStatus
                             })}
@@ -89,22 +100,22 @@ export default function Answers() {
                     <button 
                         className='question__next btn' 
                         onClick={() => {
-                            // check if current question = total questions
-                            if (!gameData.current.hasAnswered) {
-                                return
-                            } else if (gameData.current.currentQuestion + 1 === gameData.current.questionTotal) {
+                            // exit if question not answered yet
+                            if (!gameData.current.hasAnswered) {return}
+                            // end if final question
+                            if (gameData.current.currentQuestion + 1 === gameData.current.questionTotal) {
                                 // go to results page
                                 nav('/results')
-                            } else {
-                                // increase current by one
-                                gameData.current.currentQuestion += 1
-                                // set hasAnswered back to false
-                                gameData.current.hasAnswered = false
-                                // save data to storage
-                                window.sessionStorage.setItem('gameData', JSON.stringify(gameData.current))
-                                // reload
-                                window.location.reload(false)
+                                return
                             }
+                            // increase current by one
+                            gameData.current.currentQuestion += 1
+                            // set hasAnswered back to false
+                            gameData.current.hasAnswered = false
+                            // save data to storage
+                            window.sessionStorage.setItem('gameData', JSON.stringify(gameData.current))
+                            // reload
+                            window.location.reload(false)
                         }}
                     >{gameData.current.currentQuestion + 1 === gameData.current.questionTotal ? "Results" : "Next Question"}</button>
                 </div>

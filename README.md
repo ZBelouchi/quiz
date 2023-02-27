@@ -1,5 +1,7 @@
 # Trivia Quiz App
 
+Hosted [here](https://zbelouchi.github.io/quiz/) via GitHub pages
+
 A simple trivia game built with React and SASS
 ## API
 I used [The Trivia API](https://the-trivia-api.com/docs/) which offers various trivia questions with different categories and difficulties
