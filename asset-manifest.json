@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/quiz/static/css/main.039fa82e.css",
+    "main.js": "/quiz/static/js/main.2f4e224c.js",
+    "static/media/hard.png": "/quiz/static/media/hard.a7f4df5bb04d6b57a7af.png",
+    "static/media/easy.png": "/quiz/static/media/easy.8ae93c40cad8195a2910.png",
+    "static/media/medium.png": "/quiz/static/media/medium.ecedd4ad9b7eab50c41b.png",
+    "static/media/Lexend-Medium.ttf": "/quiz/static/media/Lexend-Medium.45916bdd5ad858b1e745.ttf",
+    "static/media/Lexend-Light.ttf": "/quiz/static/media/Lexend-Light.a08fb5d2aaa5f5622c53.ttf",
+    "static/media/Lexend-Bold.ttf": "/quiz/static/media/Lexend-Bold.b5599d27fc9c34cf4332.ttf",
+    "static/media/science.png": "/quiz/static/media/science.5baab6e8446459118fa5.png",
+    "static/media/gold.png": "/quiz/static/media/gold.e993c580de05e5d804f3.png",
+    "static/media/cardboard.png": "/quiz/static/media/cardboard.8b1c6569fe8d0a82d558.png",
+    "static/media/stone.png": "/quiz/static/media/stone.fbb458dcbde2a52a5f5f.png",
+    "static/media/platinum.png": "/quiz/static/media/platinum.d6908c9178d267c28d97.png",
+    "static/media/bronze.png": "/quiz/static/media/bronze.46d3dfe69b6de5746fd9.png",
+    "static/media/silver.png": "/quiz/static/media/silver.1f0bf3f9deda58036dbc.png",
+    "static/media/sport.png": "/quiz/static/media/sport.a52ca0ebbfdc216fdc91.png",
+    "static/media/art.png": "/quiz/static/media/art.b3522b59acebd1d76cd6.png",
+    "static/media/knowledge.png": "/quiz/static/media/knowledge.c125a37dc9f6b11a7d9d.png",
+    "static/media/geography.png": "/quiz/static/media/geography.1bc6cba10c614a27d398.png",
+    "static/media/music.png": "/quiz/static/media/music.29300685d0ef7a355c58.png",
+    "static/media/film.png": "/quiz/static/media/film.84d0dd5771855c06b0d8.png",
+    "static/media/history.png": "/quiz/static/media/history.db97b4212b19a7a94304.png",
+    "static/media/culture.png": "/quiz/static/media/culture.b13c93f7ff5747d36fd1.png",
+    "static/media/food.png": "/quiz/static/media/food.1d11da9bcb7de3718e26.png",
+    "index.html": "/quiz/index.html",
+    "main.039fa82e.css.map": "/quiz/static/css/main.039fa82e.css.map",
+    "main.2f4e224c.js.map": "/quiz/static/js/main.2f4e224c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.039fa82e.css",
+    "static/js/main.2f4e224c.js"
+  ]
+}
