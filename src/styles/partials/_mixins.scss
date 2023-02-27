@@ -9,6 +9,8 @@
     border-radius: 8px;
     background: $up;
     color: $font;
+    transition: border 0.02s;
+    transition: background-color 0.02s;
     &:is(&--checked, &--down, &:active):not([data-status="disabled"]) {
         border: 4px inset darken($down, 4);
         background-color: $down;
